@@ -12,14 +12,17 @@
 @implementation DGActivityIndicatorAnimationAudioEqualizer
 
 - (void)setupAnimationInLayer:(CALayer *)layer withSize:(CGSize)size tintColor:(UIColor *)tintColor {
-    CGFloat lineSize = size.width / 9;
-    CGFloat x = (layer.bounds.size.width - lineSize * 7) / 2;
-    CGFloat y = (layer.bounds.size.height - size.height) / 2;
+    NSInteger lines = 3;
+    NSInteger spacing = 1;
+    CGFloat lineWidth = (size.width - (spacing*(lines-1))) / lines;
+    CGFloat lineHeight = size.height;
+    CGFloat x = (layer.bounds.size.width - lines*lineWidth - (lines-1)*spacing) / 2;
+    CGFloat y = (layer.bounds.size.height - lineHeight) / 2;
     NSArray *duration = @[@(4.3), @(2.5), @(1.7), @(3.1)];
     NSArray *values = @[@(0), @(0.7), @(0.4), @(0.05), @(0.95), @(0.3), @(0.9), @(0.4), @(0.15), @(0.18), @(0.75), @(0.01)];
     
     // Draw lines
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < lines; i++) {
         CAKeyframeAnimation *animation = [CAKeyframeAnimation animation];
         animation.keyPath = @"path";
         animation.additive = YES;
@@ -28,9 +31,9 @@
         NSMutableArray *v = [NSMutableArray array];
         for (int j = 0; j < values.count; j++) {
             CGFloat heightFactor = [values[j] floatValue];
-            CGFloat height = size.height * heightFactor;
-            CGPoint point = CGPointMake(0, size.height - height);
-            UIBezierPath *path = [UIBezierPath bezierPathWithRect:CGRectMake(point.x, point.y, lineSize, height)];
+            CGFloat height = lineHeight * heightFactor;
+            CGPoint point = CGPointMake(0, lineHeight - height);
+            UIBezierPath *path = [UIBezierPath bezierPathWithRect:CGRectMake(point.x, point.y, lineWidth, height)];
             [v addObject:(id)path.CGPath];
         }
         animation.values = v;
@@ -38,8 +41,8 @@
         animation.repeatCount = MAXFLOAT;
         animation.removedOnCompletion = NO;
         
-        DGActivityIndicatorShape *line = [DGActivityIndicatorShape layerWithType:DGActivityIndicatorShapeTypeLine Size:CGSizeMake(lineSize, size.height) color:tintColor];
-        CGRect frame = CGRectMake(x + lineSize * 2 * i, y, lineSize, size.height);
+        DGActivityIndicatorShape *line = [DGActivityIndicatorShape layerWithType:DGActivityIndicatorShapeTypeLine Size:CGSizeMake(lineWidth, lineHeight) color:tintColor];
+        CGRect frame = CGRectMake(x + (lineWidth + spacing) * i, y, lineWidth, lineHeight);
         line.frame = frame;
         [line addAnimation:animation forKey:@"animation"];
         [layer addSublayer:line];
