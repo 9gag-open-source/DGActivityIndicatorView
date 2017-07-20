@@ -41,6 +41,7 @@
 #import "DGActivityIndicatorTripleRingsAnimation.h"
 #import "DGActivityIndicatorCookieTerminatorAnimation.h"
 #import "DGActivityIndicatorBallSpinFadeLoader.h"
+#import "DGActivityIndicatorAnimationAudioEqualizer.h"
 
 static const CGFloat kDGActivityIndicatorDefaultSize = 40.0f;
 
@@ -232,6 +233,8 @@ static const CGFloat kDGActivityIndicatorDefaultSize = 40.0f;
             return [[DGActivityIndicatorCookieTerminatorAnimation alloc]init];
         case DGActivityIndicatorAnimationTypeBallSpinFadeLoader:
             return [[DGActivityIndicatorBallSpinFadeLoader alloc] init];
+        case DGActivityIndicatorAnimationTypeAnimationAudioEqualizer:
+            return [[DGActivityIndicatorAnimationAudioEqualizer alloc] init];
     }
     return nil;
 }
