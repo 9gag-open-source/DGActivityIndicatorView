@@ -13,7 +13,7 @@
 
 - (void)setupAnimationInLayer:(CALayer *)layer withSize:(CGSize)size tintColor:(UIColor *)tintColor {
     NSInteger lines = 3;
-    NSInteger spacing = 1;
+    NSInteger spacing = 2;
     CGFloat lineWidth = (size.width - (spacing*(lines-1))) / lines;
     CGFloat lineHeight = size.height;
     CGFloat x = (layer.bounds.size.width - lines*lineWidth - (lines-1)*spacing) / 2;
